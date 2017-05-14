@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Validator Service</title>
+    <link rel="stylesheet" href="../static/bootstrap.css"  th:href="@{/bootstrap.css}" />
+</head>
+<body>
+<header>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Validator Service</a>
+        </div>
+    </nav>
+
+</header>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>Vorname</th>
+        <th>Nachname</th>
+        <th>E-Mail</th>
+        <th>Versichertennummer</th>
+        <th>Versicherung</th>
+        <th>Telefonnummer</th>
+        <th style="width: 90px"></th>
+    </tr>
+    </thead>
+    <tbody>
+<tr th:each="patient: ${patients}">
+    <td th:text="${patient.firstName}">Vorname</td>
+    <td th:text="${patient.lastName}">Vorname</td>
+    <td th:text="${patient.email}">Vorname</td>
+    <td th:text="${patient.insuranceNumber}">Vorname</td>
+    <td th:text="${patient.insurance}">Vorname</td>
+    <td th:text="${patient.phoneNumber}">Vorname</td>
+</tr>
+</tbody>
+</table>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>Vorname</th>
+        <th>Nachname</th>
+        <th>E-Mail</th>
+        <th>Versichertennummer</th>
+        <th>Versicherung</th>
+        <th>Telefonnummer</th>
+        <th style="width: 90px"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="patient: ${patientsAnonym}">
+        <td th:text="${patient.firstName}">Vorname</td>
+        <td th:text="${patient.lastName}">Vorname</td>
+        <td th:text="${patient.email}">Vorname</td>
+        <td th:text="${patient.insuranceNumber}">Vorname</td>
+        <td th:text="${patient.insurance}">Vorname</td>
+        <td th:text="${patient.phoneNumber}">Vorname</td>
+    </tr>
+    </tbody>
+</table>
+
+
+</body>
+</html>

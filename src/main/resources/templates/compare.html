@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Vergleich</title>
+    <link rel="stylesheet" href="../static/bootstrap.css"  th:href="@{/bootstrap.css}" />
+</head>
+<body>
+<header>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Vergleich der beiden Tabellen</a>
+        </div>
+    </nav>
+
+</header>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>Vorname</th>
+        <th>Vorname anonym</th>
+        <th>Nachname</th>
+        <th>Nachname anonym</th>
+        <th>E-Mail</th>
+        <th>E-Mail anonym</th>
+        <th>Versichertennummer</th>
+        <th>Versichertennummer anonym</th>
+        <th>Versicherung</th>
+        <th>Versicherung anonym</th>
+        <th>Telefonnummer</th>
+        <th>Telefonnummer anonym</th>
+        <th style="width: 90px"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="index: ${#numbers.sequence(0, #arrays.length(patients)-1)}">
+        <td th:text="${patients[index].firstName}">Vorname</td>
+        <td th:text="${patientsAnonym[index].firstName}">Vorname</td>
+
+        <td th:text="${patients[index].lastName}">Vorname</td>
+        <td th:text="${patientsAnonym[index].lastName}">Vorname</td>
+
+        <td th:text="${patients[index].email}">Vorname</td>
+        <td th:text="${patientsAnonym[index].email}">Vorname</td>
+
+        <td th:text="${patients[index].insuranceNumber}">Vorname</td>
+        <td th:text="${patientsAnonym[index].insuranceNumber}">Vorname</td>
+
+        <td th:text="${patients[index].insurance}">Vorname</td>
+        <td th:text="${patientsAnonym[index].insurance}">Vorname</td>
+
+
+        <td th:text="${patients[index].phoneNumber}">Vorname</td>
+        <td th:text="${patientsAnonym[index].phoneNumber}">Vorname</td>
+    </tr>
+    </tbody>
+</table>
+
+
+</body>
+</html>
