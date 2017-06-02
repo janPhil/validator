@@ -7,58 +7,68 @@
 </head>
 <body>
 <header>
+    <div class="container-fluid">
+        <h2>Validator Service</h2>
+    </div>
     <nav class="navbar navbar-default">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">Validator Service</a>
+            <a class="navbar-light" href="compare.html">Gesamte Daten vergleichen</a>
         </div>
     </nav>
 
 </header>
 
-<table class="table">
-    <thead>
-    <tr>
-        <th>Vorname</th>
-        <th>Nachname</th>
-        <th>E-Mail</th>
-        <th>Versichertennummer</th>
-        <th>Versicherung</th>
-        <th>Telefonnummer</th>
-        <th style="width: 90px"></th>
-    </tr>
-    </thead>
-    <tbody>
-<tr th:each="patient: ${patients}">
-    <td th:text="${patient.firstName}">Vorname</td>
-    <td th:text="${patient.lastName}">Vorname</td>
-    <td th:text="${patient.email}">Vorname</td>
-    <td th:text="${patient.insuranceNumber}">Vorname</td>
-    <td th:text="${patient.insurance}">Vorname</td>
-    <td th:text="${patient.phoneNumber}">Vorname</td>
-</tr>
-</tbody>
-</table>
 
-<table class="table">
-    <thead>
-    <tr>
-        <th>Vorname</th>
-        <th>Nachname</th>
-        <th>E-Mail</th>
-        <th>Versichertennummer</th>
-        <th>Versicherung</th>
-        <th>Telefonnummer</th>
-        <th style="width: 90px"></th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="patient: ${patientsAnonym}">
+<form action="#" th:action="@{/compareSelected}" th:object="${selection}" method="post">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Vorname</th>
+            <th>Nachname</th>
+            <th>E-Mail</th>
+            <th>Versichertennummer</th>
+            <th>Versicherung</th>
+            <th>Telefonnummer</th>
+            <th>Select</th>
+        </tr>
+        </thead>
+        <tbody>
+    <tr th:each="patient: ${patients}">
         <td th:text="${patient.firstName}">Vorname</td>
         <td th:text="${patient.lastName}">Vorname</td>
         <td th:text="${patient.email}">Vorname</td>
         <td th:text="${patient.insuranceNumber}">Vorname</td>
         <td th:text="${patient.insurance}">Vorname</td>
         <td th:text="${patient.phoneNumber}">Vorname</td>
+        <td><input type="checkbox" id="pid" name="pid" th:value="${patient.id}"/></td>
+    </tr>
+    </tbody>
+    </table>
+    <button th:type="submit">start</button>
+</form>
+
+
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>Vorname</th>
+        <th>Nachname</th>
+        <th>E-Mail</th>
+        <th>Versichertennummer</th>
+        <th>Versicherung</th>
+        <th>Telefonnummer</th>
+        <th>Select</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="patient: ${patientsAnonym}">
+        <td th:text="${patient.firstName}">Vorname</td>
+        <td th:text="${patient.lastName}">Nachname</td>
+        <td th:text="${patient.email}">Mail</td>
+        <td th:text="${patient.insuranceNumber}">Versichertennummer</td>
+        <td th:text="${patient.insurance}">Versicherung</td>
+        <td th:text="${patient.phoneNumber}">Telefon</td>
+        <td><input type="radio" th:value="${patient}"/></td>
     </tr>
     </tbody>
 </table>

@@ -2,11 +2,9 @@ package com.masterarbeit;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,6 +15,7 @@ import java.util.List;
 public class ValidatorController {
 
     PatientRepository patientRepository;
+    PatientAnonymRepository patientAnonymRepository;
 
     @Autowired
     public ValidatorController(PatientRepository patientRepository){
@@ -39,4 +38,25 @@ public class ValidatorController {
         patientRepository.delete(id);
         return patientRepository.findAll();
     }
+
+    @RequestMapping("/compare")
+    public List<Patient> compare(){
+        CompareService compareService = new CompareService();
+        compareService.comparePatients(patientRepository.findAll(), patientAnonymRepository.findAll());
+        return patientRepository.findAll();
+    }
+
+    @RequestMapping(value = "/compareSelected", method = RequestMethod.POST)
+    public String compareSelected(Model model, @RequestParam(name="pid")  List<String> selection){
+
+        List<Patient> list = new ArrayList<Patient>();
+
+        for ( String s : selection){
+            System.out.println(s);
+        }
+
+        return "test";
+    }
+
+
 }

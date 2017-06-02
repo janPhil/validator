@@ -3,7 +3,12 @@ package com.masterarbeit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Jan on 13.04.2017.
@@ -13,6 +18,7 @@ public class ViewController {
 
     PatientRepository patientRepository;
     PatientAnonymRepository patientAnonymRepository;
+
     @Autowired
     public ViewController(PatientRepository patientRepository, PatientAnonymRepository patientAnonymRepository){
         this.patientRepository = patientRepository;
@@ -28,7 +34,8 @@ public class ViewController {
         return "index";
     }
 
-    @RequestMapping("/compare")
+
+    @RequestMapping("/compare2")
     public String compare(Model theModel){
 
         CompareService compareService = new CompareService();
@@ -39,5 +46,21 @@ public class ViewController {
 
         return "compare";
     }
+
+    @RequestMapping(value = "/compareSelected")
+    @ResponseBody
+    public String compareSelected(Model model, @RequestParam(name="pid") List<String> selection){
+
+        List<Patient> list = new ArrayList<Patient>();
+
+        for ( String s : selection){
+            System.out.println(s);
+            list.add(patientRepository.findOne(Integer.parseInt(s)));
+        }
+        model.addAttribute("patients",list);
+
+        return "compareSelected";
+    }
+
 
 }
