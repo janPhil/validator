@@ -35,7 +35,7 @@ public class ViewController {
     }
 
 
-    @RequestMapping("/compare2")
+    @RequestMapping("/compare")
     public String compare(Model theModel){
 
         CompareService compareService = new CompareService();
@@ -47,8 +47,7 @@ public class ViewController {
         return "compare";
     }
 
-    @RequestMapping(value = "/compareSelected")
-    @ResponseBody
+    @RequestMapping("/compareSelected")
     public String compareSelected(Model model, @RequestParam(name="pid") List<String> selection){
 
         List<Patient> list = new ArrayList<Patient>();
@@ -61,6 +60,5 @@ public class ViewController {
 
         return "compareSelected";
     }
-
 
 }
