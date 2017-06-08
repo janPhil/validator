@@ -18,6 +18,7 @@ public class ViewController {
 
     PatientRepository patientRepository;
     PatientAnonymRepository patientAnonymRepository;
+    ValidatorController validatorController;
 
     @Autowired
     public ViewController(PatientRepository patientRepository, PatientAnonymRepository patientAnonymRepository){
@@ -60,5 +61,6 @@ public class ViewController {
 
         return "compareSelected";
     }
+
 
 }
