@@ -1,12 +1,12 @@
 package com.masterarbeit;
 
+import com.masterarbeit.anonymize.AnonymizeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,14 +16,15 @@ import java.util.List;
 @Controller
 public class ViewController {
 
-    PatientRepository patientRepository;
-    PatientAnonymRepository patientAnonymRepository;
-    ValidatorController validatorController;
+    private PatientRepository patientRepository;
+    private PatientAnonymRepository patientAnonymRepository;
+    private PatientAnonymizedRepository patientAnonymizedRepository;
 
     @Autowired
-    public ViewController(PatientRepository patientRepository, PatientAnonymRepository patientAnonymRepository){
+    public ViewController(PatientRepository patientRepository, PatientAnonymRepository patientAnonymRepository, PatientAnonymizedRepository patientAnonymizedRepository){
         this.patientRepository = patientRepository;
         this.patientAnonymRepository = patientAnonymRepository;
+        this.patientAnonymizedRepository = patientAnonymizedRepository;
     }
 
     @RequestMapping("/")
@@ -37,10 +38,10 @@ public class ViewController {
 
 
     @RequestMapping("/compare")
-    public String compare(Model theModel){
+    public String compare(Model theModel) throws IllegalAccessException {
 
-        CompareService compareService = new CompareService();
-        compareService.comparePatients(patientRepository.findAll(), patientAnonymRepository.findAll());
+        ComparePatients compare = new ComparePatients();
+        compare.comparePatients(patientRepository.findAll(), patientAnonymRepository.findAll());
 
         theModel.addAttribute("patients", patientRepository.findAll());
         theModel.addAttribute("patientsAnonym", patientAnonymRepository.findAll());
@@ -51,7 +52,7 @@ public class ViewController {
     @RequestMapping("/compareSelected")
     public String compareSelected(Model model, @RequestParam(name="pid") List<String> selection){
 
-        List<Patient> list = new ArrayList<Patient>();
+        List<Patient> list = new ArrayList<>();
 
         for ( String s : selection){
             System.out.println(s);
@@ -61,6 +62,32 @@ public class ViewController {
 
         return "compareSelected";
     }
+
+    @RequestMapping("/anonymize")
+    public String anonymize(Model model) throws IOException {
+
+        AnonymizeService anonymizeService = new AnonymizeService();
+        ArrayList<Patient_anonymized> p = anonymizeService.anonymizePatients(patientRepository.findAll());
+        patientAnonymizedRepository.save(p);
+        System.out.println("saved :)");
+        ComparePatients_anonym compare = new ComparePatients_anonym();
+        compare.comparePatientsAnonymized(patientRepository.findAll(), patientAnonymizedRepository.findAll());
+        model.addAttribute("patients", patientRepository.findAll());
+        model.addAttribute("patientsAnonymized", patientAnonymizedRepository.findAll());
+
+        return "anonymize";
+    }
+
+    @RequestMapping("/deleteAnonymizedPatients")
+    public String deleteAnonymizedPatients(Model model){
+        patientAnonymizedRepository.deleteAll();
+        model.addAttribute("patients", patientRepository.findAll());
+
+
+
+        return "anonymize";
+    }
+
 
 
 }

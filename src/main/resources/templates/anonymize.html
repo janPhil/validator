@@ -12,8 +12,7 @@
     </div>
     <nav class="navbar navbar-default">
         <div class="container-fluid">
-            <a class="navbar-light" href="compare.html">Gesamte Daten vergleichen</a>
-            <a class="navbar-light" href="anonymize.html">Datenbank anonymisieren</a>
+            <a class="navbar-light" href="/">Home</a>
         </div>
     </nav>
 
@@ -30,7 +29,7 @@
             <th>Versichertennummer</th>
             <th>Versicherung</th>
             <th>Telefonnummer</th>
-            <th>Select</th>
+
         </tr>
         </thead>
         <tbody>
@@ -41,13 +40,14 @@
         <td th:text="${patient.insuranceNumber}">Vorname</td>
         <td th:text="${patient.insurance}">Vorname</td>
         <td th:text="${patient.phoneNumber}">Vorname</td>
-        <td><input type="checkbox" id="pid" name="pid" th:value="${patient.id}"/></td>
     </tr>
     </tbody>
     </table>
-    <button th:type="submit">start</button>
 </form>
 
+<div class="container-fluid">
+    <a class="navbar-light" href="deleteAnonymizedPatients">Delete Anonymization</a>
+</div>
 
 <table class="table table-striped">
     <thead>
@@ -58,21 +58,20 @@
         <th>Versichertennummer</th>
         <th>Versicherung</th>
         <th>Telefonnummer</th>
-        <th>Select</th>
     </tr>
     </thead>
     <tbody>
-    <tr th:each="patient: ${patientsAnonym}">
+    <tr th:each="patient: ${patientsAnonymized}">
         <td th:text="${patient.firstName}">Vorname</td>
         <td th:text="${patient.lastName}">Nachname</td>
         <td th:text="${patient.email}">Mail</td>
         <td th:text="${patient.insuranceNumber}">Versichertennummer</td>
         <td th:text="${patient.insurance}">Versicherung</td>
         <td th:text="${patient.phoneNumber}">Telefon</td>
-        <td><input type="radio" th:value="${patient}"/></td>
     </tr>
     </tbody>
 </table>
+
 
 
 </body>

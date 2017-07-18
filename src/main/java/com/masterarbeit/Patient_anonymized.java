@@ -4,55 +4,41 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.sql.Date;
-import java.time.LocalDate;
 
 /**
- * Created by Jan on 12.04.2017.
+ * Created by Jan on 14.04.2017.
  */
-
 @Entity
-public class Patient {
+public class Patient_anonymized {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private long insuranceNumber;
     private long phoneNumber;
-    private Date birthday;
     private String firstName;
     private String lastName;
     private String email;
     private String insurance;
 
+    public Patient_anonymized(){}
 
-    public Patient() {}
-
-    public Patient(int id, String firstName, String lastName, Date birthday, String email, String insurance, int insPolicyNumber, int phoneNumber){
+    public Patient_anonymized(int id, String firstName, String lastName, String email, String insurance, int insPolicyNumber, int phoneNumber){
 
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.birthday = birthday;
         this.email = email;
         this.insurance = insurance;
         this.insuranceNumber = insPolicyNumber;
         this.phoneNumber = phoneNumber;
     }
 
-    public Date getBirthday() {
-        return birthday;
-    }
-
-    public void setBirthday(Date birthday) {
-        this.birthday = birthday;
-    }
-
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -62,6 +48,12 @@ public class Patient {
 
     public void setInsuranceNumber(int insuranceNumber) {
         this.insuranceNumber = insuranceNumber;
+    }
+
+    public long getPhoneNumber() { return phoneNumber; }
+
+    public void setPhoneNumber(long phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public String getFirstName() {
@@ -94,13 +86,5 @@ public class Patient {
 
     public void setInsurance(String insurance) {
         this.insurance = insurance;
-    }
-
-    public long getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(int phoneNumber) {
-        this.phoneNumber = phoneNumber;
     }
 }

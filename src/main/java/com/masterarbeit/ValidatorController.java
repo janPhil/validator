@@ -14,8 +14,8 @@ import java.util.List;
 @RequestMapping(value = "/patients")
 public class ValidatorController {
 
-    PatientRepository patientRepository;
-    PatientAnonymRepository patientAnonymRepository;
+    private PatientRepository patientRepository;
+    private PatientAnonymRepository patientAnonymRepository;
 
     @Autowired
     public ValidatorController(PatientRepository patientRepository){
@@ -39,17 +39,10 @@ public class ValidatorController {
         return patientRepository.findAll();
     }
 
-    @RequestMapping("/compare")
-    public List<Patient> compare(){
-        CompareService compareService = new CompareService();
-        compareService.comparePatients(patientRepository.findAll(), patientAnonymRepository.findAll());
-        return patientRepository.findAll();
-    }
 
     @RequestMapping(value = "/compareSelected", method = RequestMethod.POST)
-    public String compareSelected(Model model, @RequestParam(name="pid")  List<String> selection){
+    public String compareSelected(@RequestParam(name="pid")  List<String> selection){
 
-        List<Patient> list = new ArrayList<Patient>();
 
         for ( String s : selection){
             System.out.println(s);
@@ -57,6 +50,8 @@ public class ValidatorController {
 
         return "test";
     }
+
+
 
 
 }
