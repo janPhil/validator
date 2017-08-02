@@ -11,25 +11,24 @@ public class Comparer implements ComparerInterface {
     private final IntegerComp intComp;
     private final DoubleComp doubleComp;
     private final DateComp dateComp;
-    private final LongComp longComp;
-    private final StringCompare stringCompare;
+    private final StringComp stringComp;
 
-    Comparer(IntegerComp intComp, DoubleComp doubleComp, DateComp dateComp, LongComp longComp, StringCompare stringCompare){
+    Comparer(IntegerComp intComp, DoubleComp doubleComp, DateComp dateComp, StringComp stringComp){
 
         this.intComp = intComp;
         this.doubleComp = doubleComp;
         this.dateComp = dateComp;
-        this.longComp = longComp;
-        this.stringCompare = stringCompare;
+        this.stringComp = stringComp;
     }
 
     @Override
-    public double compare(Object a, Object b, int sig) {
+    public double compare(Object a, Object b, double sig) {
 
-        if (a.getClass() != b.getClass())
+        if (a.getClass() != b.getClass()) {
+            System.out.println("Error: Objects are not same type");
             return 0.0;
-
-        if (a.getClass() == Integer.class){
+        }
+        if (a.getClass() == Integer.class || a.getClass() == Long.class){
             System.out.println("int");
             return this.intComp.compare(a,b,sig);
         }
@@ -41,16 +40,9 @@ public class Comparer implements ComparerInterface {
             System.out.println("Date");
             return this.dateComp.compare(a,b,sig);
         }
-        if (a.getClass() == Long.class){
-            System.out.println("Long");
-            System.out.println(this.longComp.compare(a,b,sig));
-        }
         if (a.getClass() == String.class){
-            System.out.println("String");
-            return this.stringCompare.compare(a,b,1);
+            return this.stringComp.compare(a,b,sig);
         }
-
-        System.out.println(a.getClass());
 
         return 0.0;
     }

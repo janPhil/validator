@@ -13,7 +13,7 @@
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <a class="navbar-light" href="compare.html">Gesamte Daten vergleichen</a>
-            <a class="navbar-light" href="anonymize.html">Datenbank anonymisieren</a>
+            <a class="navbar-light" href="compareOne.html" th:object="${selection}">Einen Datensatz vergleichen</a>
         </div>
     </nav>
 
@@ -26,6 +26,7 @@
         <tr>
             <th>Vorname</th>
             <th>Nachname</th>
+            <th>Geburtstag</th>
             <th>E-Mail</th>
             <th>Versichertennummer</th>
             <th>Versicherung</th>
@@ -36,16 +37,18 @@
         <tbody>
     <tr th:each="patient: ${patients}">
         <td th:text="${patient.firstName}">Vorname</td>
-        <td th:text="${patient.lastName}">Vorname</td>
-        <td th:text="${patient.email}">Vorname</td>
-        <td th:text="${patient.insuranceNumber}">Vorname</td>
-        <td th:text="${patient.insurance}">Vorname</td>
-        <td th:text="${patient.phoneNumber}">Vorname</td>
+        <td th:text="${patient.lastName}">Nachname</td>
+        <td th:text="${patient.birthday}">Geburtstag</td>
+        <td th:text="${patient.email}">Mail-Adresse</td>
+        <td th:text="${patient.insuranceNumber}">Versichertennummer</td>
+        <td th:text="${patient.insurance}">Versicherung</td>
+        <td th:text="${patient.phoneNumber}">Telefonnummer</td>
         <td><input type="checkbox" id="pid" name="pid" th:value="${patient.id}"/></td>
     </tr>
     </tbody>
     </table>
     <button th:type="submit">start</button>
+    <button th:type="submit" th:action="@{/compareOne}" th:object="${1}">One</button>
 </form>
 
 
@@ -54,22 +57,22 @@
     <tr>
         <th>Vorname</th>
         <th>Nachname</th>
+        <th>Geburtstag</th>
         <th>E-Mail</th>
         <th>Versichertennummer</th>
         <th>Versicherung</th>
         <th>Telefonnummer</th>
-        <th>Select</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="patient: ${patientsAnonym}">
         <td th:text="${patient.firstName}">Vorname</td>
         <td th:text="${patient.lastName}">Nachname</td>
-        <td th:text="${patient.email}">Mail</td>
+        <td th:text="${patient.birthday}">Geburtstag</td>
+        <td th:text="${patient.email}">Mail-Adresse</td>
         <td th:text="${patient.insuranceNumber}">Versichertennummer</td>
         <td th:text="${patient.insurance}">Versicherung</td>
-        <td th:text="${patient.phoneNumber}">Telefon</td>
-        <td><input type="radio" th:value="${patient}"/></td>
+        <td th:text="${patient.phoneNumber}">Telefonnummer</td>
     </tr>
     </tbody>
 </table>

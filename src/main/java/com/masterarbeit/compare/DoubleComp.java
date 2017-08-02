@@ -11,6 +11,7 @@ public class DoubleComp implements ComparerInterface {
     private final IntegerComp integerComp;
 
     private int DoubleToInt(double x) {
+        System.out.println(x);
         String temp = String.valueOf(x);
         temp = temp.replace(".", "");
         return Integer.parseInt(temp);
@@ -21,7 +22,7 @@ public class DoubleComp implements ComparerInterface {
     }
 
     @Override
-    public double compare(Object a, Object b, int sig) {
+    public double compare(Object a, Object b, double sig) {
 
         return (compareCommaPosition(((Double) a), ((Double) b)) + this.integerComp.compare(DoubleToInt(((Double) a)), DoubleToInt(((Double) b)), sig))/2.0;
 
@@ -40,4 +41,3 @@ public class DoubleComp implements ComparerInterface {
         return pow(E, p);
     }
 }
-

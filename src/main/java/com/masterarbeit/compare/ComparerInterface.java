@@ -5,6 +5,6 @@ package com.masterarbeit.compare;
  */
 public interface ComparerInterface {
 
-    double compare(Object a, Object b, int sig);
+    double compare(Object a, Object b, double sig);
 
 }

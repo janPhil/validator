@@ -2,11 +2,9 @@ package com.masterarbeit.compare;
 
 import com.masterarbeit.Patient;
 import com.masterarbeit.Patient_anonym;
-import com.masterarbeit.Patient_anonymized;
 
 import java.lang.reflect.Field;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by Jan on 25.04.2017.
@@ -16,120 +14,81 @@ public abstract class CompareService {
     private IntegerComp intCompare = new IntegerComp();
     private DateComp dateCompare = new DateComp(intCompare);
     private DoubleComp doubleCompare = new DoubleComp(intCompare);
-    private LongComp longComp = new LongComp();
-    private StringCompare stringCompare = new StringCompare(intCompare);
-    private Comparer comp = new Comparer(intCompare,doubleCompare,dateCompare,longComp, stringCompare);
+    private StringComp stringCompare = new StringComp(intCompare);
+    private Comparer comp = new Comparer(intCompare,doubleCompare,dateCompare,stringCompare);
 
-    public void comparePatients(List<Patient> patients, List<Patient_anonym> patient_anonym) throws IllegalAccessException {
+    public List<Map<String, Double>> doCompare(List<Patient> patients, List<Patient_anonym> patient_anonym) throws IllegalAccessException {
 
         Iterator<Patient> it1 = patients.iterator();
         Iterator<Patient_anonym> it2 = patient_anonym.iterator();
+        List<Map<String, Double>> results = new ArrayList<>();
 
         while(it1.hasNext() && it2.hasNext()){
+
             Object patientOriginal = it1.next();
             Object patientAnonym = it2.next();
 
-
             Field[] fieldsPatientOriginal = patientOriginal.getClass().getDeclaredFields();
             Field[] fieldsPatientAnonym = patientAnonym.getClass().getDeclaredFields();
-
+            Map<String, Double> result = new HashMap<>();
 
             for (int i=0; i<fieldsPatientOriginal.length; i++){
+
                 fieldsPatientAnonym[i].setAccessible(true);
                 fieldsPatientOriginal[i].setAccessible(true);
-                System.out.println(comp.compare(fieldsPatientOriginal[i].get(patientOriginal), fieldsPatientAnonym[i].get(patientAnonym), 1));
+                result.put(fieldsPatientOriginal[i].getName(), comp.compare(fieldsPatientOriginal[i].get(patientOriginal), fieldsPatientAnonym[i].get(patientAnonym), 1));
             }
-
-            /*
-            for (Field f: fieldsPatientOriginal){
-                f.setAccessible(true);
-                if (f.getType() == String.class) {
-                    if (f.get(patientOriginal).toString().matches("[A-z]+[0-9]$")){
-                        System.out.println("String ist alphanumerisch " + f.getName() + " " +  f.get(patientOriginal).toString());
-                    }
-                    else if (f.get(patientOriginal).toString().matches("[0-9]+")){
-                        System.out.println("String ist numerisch " + f.getName() + " " + f.get(patientOriginal).toString());
-                    }
-                    else
-                        System.out.println("String ist alpha " + f.getName() + " " + f.get(patientOriginal).toString());
-                }
-                else if (f.getType() == Integer.class)
-                    System.out.println("Integer: " + f.getName() + " " + f.get(patientOriginal));
-                else if (f.getType() == long.class)
-                    System.out.println("Long: " + f.getName() + " " +  f.get(patientOriginal));
-                else if (f.getType() == Date.class)
-                    System.out.println("Date: " + f.getName() + " " +  f.get(patientOriginal));
-                else{
-                    System.out.println("Keinen Datentyp für: " + f.getName() + " " + f.get(patientOriginal));
-
-                }
-            }*/
+            results.add(result);
         }
-    }
+        System.out.println("----------Results:---------------");
 
-    public void comparePatientsAnonymized(List<Patient> patients, List<Patient_anonymized> patient_anonym){
-
-        Iterator<Patient> it1 = patients.iterator();
-        Iterator<Patient_anonymized> it2 = patient_anonym.iterator();
-
-        while(it1.hasNext() && it2.hasNext()){
-            Object patientOriginal = it1.next();
-            Object patientAnonym = it2.next();
-
-            Field[] fieldsPatientOriginal = patientOriginal.getClass().getDeclaredFields();
-            Field[] fieldsPatientAnonym = patientAnonym.getClass().getDeclaredFields();
-
-            for(int i=0; (i<fieldsPatientOriginal.length && i<fieldsPatientAnonym.length); i++){
-                fieldsPatientOriginal[i].setAccessible(true);
-                fieldsPatientAnonym[i].setAccessible(true);
-                try {
-                    System.out.println(fieldsPatientOriginal[i].get(patientOriginal) + " || " + fieldsPatientAnonym[i].get(patientAnonym));
-                    System.out.println(fieldsPatientOriginal[i].getType() + " || " + fieldsPatientAnonym[i].getType());
-                    System.out.println(fieldsPatientOriginal[i].getName());
-                    if (fieldsPatientOriginal[i].getType() == String.class){
-                        String s1 = (String) fieldsPatientOriginal[i].get(patientOriginal);
-                        String s2 = (String) fieldsPatientAnonym[i].get(patientAnonym);
-                        System.out.println(StringCompare(s1, s2));
-                    }
-                    if (fieldsPatientOriginal[i].getType() == Integer.class){
-                        System.out.println("Integer");
-                    }
-
-
-                } catch (IllegalArgumentException | IllegalAccessException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-
+        for (Object result : results) {
+            HashMap<String, Double> temp = (HashMap<String, Double>) result;
+            Set set = temp.entrySet();
+            for (Object aSet : set) {
+                Map.Entry me = (Map.Entry) aSet;
+                System.out.println(me.getKey() + " : " + me.getValue());
             }
+            System.out.println("-----------------------------");
         }
+
+        return results;
+
     }
 
 
-    public double StringCompare(String s1, String s2){
+    public HashMap<String, Double> compareOne(Patient p, List<Patient_anonym> patient_anonym) throws IllegalAccessException{
 
-        double result = 100.0;
+        HashMap result = new HashMap();
+        Iterator it = patient_anonym.iterator();
+        Field[] fieldPatient = p.getClass().getDeclaredFields();
 
-        if (s1.equals(s2)) {
-            result -= 100.0;
-            return result;
-        }
 
-        if(s1.length() == s2.length())
-            result -= 5.0;
+        while (it.hasNext()){
+            Object patientAnonym = it.next();
 
-        char[] charArray = s1.toCharArray();
+            Field[] fieldPatientAnonym = patientAnonym.getClass().getDeclaredFields();
+            for (int i=0; i<fieldPatientAnonym.length; i++) {
+                fieldPatient[i].setAccessible(true);
+                fieldPatientAnonym[i].setAccessible(true);
+                result.put(fieldPatient[i].getName(), comp.compare(fieldPatient[i].get(p), fieldPatientAnonym[i].get(patientAnonym), 1));
 
-        for (int i=0; i<s1.length(); i++){
-            if (s2.contains(""+s1.charAt(i))){
-                result -= 2.0;
-                System.out.println("-2.0 für: " + s1.charAt(i));
             }
+
         }
+
+        Set set = result.entrySet();
+
+        Iterator i = set.iterator();
+
+        while(i.hasNext()) {
+            Map.Entry me = (Map.Entry)i.next();
+            System.out.print(me.getKey() + ": ");
+            System.out.println(me.getValue());
+        }
+
 
         return result;
     }
-
-
 
 }

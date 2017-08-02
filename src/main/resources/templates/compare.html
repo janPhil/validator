@@ -21,6 +21,7 @@
     <tr>
         <th>Vorname</th>
         <th>Nachname</th>
+        <th>Geburtstag</th>
         <th>E-Mail</th>
         <th>Versichertennummer</th>
         <th>Versicherung</th>
@@ -33,6 +34,7 @@
         <tr bgcolor="#cbedc7">
             <td th:text="${patients[index].firstName}">Vorname</td>
             <td th:text="${patients[index].lastName}">Nachname</td>
+            <td th:text="${patients[index].birthday}">Geburtstag</td>
             <td th:text="${patients[index].email}">mail</td>
             <td th:text="${patients[index].insuranceNumber}">versichertennummer</td>
             <td th:text="${patients[index].insurance}">versicherung</td>
@@ -41,6 +43,7 @@
         <tr bgcolor="#ff7f50">
             <td th:text="${patientsAnonym[index].firstName}">Vorname</td>
             <td th:text="${patientsAnonym[index].lastName}">Nachname</td>
+            <td th:text="${patientsAnonym[index].birthday}">Geburtstag</td>
             <td th:text="${patientsAnonym[index].email}">Mail</td>
             <td th:text="${patientsAnonym[index].insuranceNumber}">Versicherungsnummer</td>
             <td th:text="${patientsAnonym[index].insurance}">Versicherung</td>

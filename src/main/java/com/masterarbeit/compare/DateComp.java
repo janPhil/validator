@@ -47,15 +47,31 @@ public class DateComp implements ComparerInterface {
 
     }
 
+    private double gausCompareTwoValues(int org, int anonymus, double sig){
+
+        if (org<anonymus){
+            double del= -0.5*Math.pow((anonymus-org)/sig,2);
+            double res = Math.exp(del);
+            return res;
+        } else if (anonymus<org){
+            double del= -0.5*Math.pow((org-anonymus)/sig,2);
+            double res = Math.exp(del);
+            return res;
+        }
+        else
+            return 1.0;
+    }
+
     @Override
-    public double compare(Object a, Object b, int sig) {
+    public double compare(Object a, Object b, double sig) {
 
         LocalDate date1 = convertDate(a);
         LocalDate date2 = convertDate(b);
+        System.out.println(date1 + " " + date2);
 
-        double day = compareTwoValues(date1.getDayOfMonth(), date2.getDayOfMonth(), 15, 31);
+        double day = gausCompareTwoValues(date1.getDayOfMonth(), date2.getDayOfMonth(), 2.0);
         System.out.println("Day: " + day);
-        double month = compareTwoValues(date1.getMonthValue(), date2.getMonthValue(), 6, 12);
+        double month = gausCompareTwoValues(date1.getMonthValue(), date2.getMonthValue(), 2.0);
         System.out.println("Month: " + month);
         double year = this.integerComp.compare(date1.getYear(),date2.getYear(), 1);
         System.out.println("Year: " + year);
