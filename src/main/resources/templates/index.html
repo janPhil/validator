@@ -13,7 +13,6 @@
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <a class="navbar-light" href="compare.html">Gesamte Daten vergleichen</a>
-            <a class="navbar-light" href="compareOne.html" th:object="${selection}">Einen Datensatz vergleichen</a>
         </div>
     </nav>
 
@@ -31,7 +30,8 @@
             <th>Versichertennummer</th>
             <th>Versicherung</th>
             <th>Telefonnummer</th>
-            <th>Select</th>
+            <th>Privatversichert</th>
+            <th>Letzter Rechnungsbetrag</th>
         </tr>
         </thead>
         <tbody>
@@ -43,12 +43,13 @@
         <td th:text="${patient.insuranceNumber}">Versichertennummer</td>
         <td th:text="${patient.insurance}">Versicherung</td>
         <td th:text="${patient.phoneNumber}">Telefonnummer</td>
+        <td th:text="${patient.privateInsurance}">privateversichert</td>
+        <td th:text="${patient.lastAmountInvoiced}">letzter Rechnungsbetrag</td>
         <td><input type="checkbox" id="pid" name="pid" th:value="${patient.id}"/></td>
     </tr>
     </tbody>
     </table>
-    <button th:type="submit">start</button>
-    <button th:type="submit" th:action="@{/compareOne}" th:object="${1}">One</button>
+    <button th:type="submit">Auswahl vergleichen</button>
 </form>
 
 
@@ -62,6 +63,8 @@
         <th>Versichertennummer</th>
         <th>Versicherung</th>
         <th>Telefonnummer</th>
+        <th>Privatversichert</th>
+        <th>Letzter Rechnungsbetrag</th>
     </tr>
     </thead>
     <tbody>
@@ -73,6 +76,8 @@
         <td th:text="${patient.insuranceNumber}">Versichertennummer</td>
         <td th:text="${patient.insurance}">Versicherung</td>
         <td th:text="${patient.phoneNumber}">Telefonnummer</td>
+        <td th:text="${patient.privateInsurance}">privateversichert</td>
+        <td th:text="${patient.lastAmountInvoiced}">letzter Rechnungsbetrag</td>
     </tr>
     </tbody>
 </table>

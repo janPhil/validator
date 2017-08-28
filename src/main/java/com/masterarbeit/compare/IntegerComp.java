@@ -75,22 +75,26 @@ public class IntegerComp implements ComparerInterface {
         return result;
     }
 
-
     @Override
     public double compare(Object a, Object b, double sig) {
 
         ArrayList<Integer> org = new ArrayList<>();
         ArrayList<Integer> anonymus = new ArrayList<>();
-
         if (a.getClass() == String.class && b.getClass() == String.class){
             org = (stringToArrayList(((String) a)));
             anonymus = (stringToArrayList(((String) b)));
+            if (a.equals(b))
+                return 0.0;
         }
         else if (a.getClass() == Integer.class && b.getClass() == Integer.class) {
+            if (a.equals(b))
+                return 0.0;
             org = (intToArrayList(((Integer) a)));
             anonymus = (intToArrayList(((Integer) b)));
         }
         else if (a.getClass() == Long.class && b.getClass() == Long.class) {
+            if (a.equals(b))
+                return 0.0;
             org = (longToArrayList(((long) a)));
             anonymus = (longToArrayList(((long) b)));
         }
@@ -104,7 +108,7 @@ public class IntegerComp implements ComparerInterface {
         for (int i = 0; i < len; i++) {
             sum += exp(-0.5*(pow(org.get(i)-anonymus.get(i)/sig,2)));
         }
-        double cont = sum/len;
+        double cont = (1.0/len) * sum;
         return (0.5*(cont+length));
     }
 

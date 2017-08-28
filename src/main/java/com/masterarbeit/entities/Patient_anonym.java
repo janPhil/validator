@@ -1,18 +1,16 @@
-package com.masterarbeit;
+package com.masterarbeit.entities;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.sql.Date;
-import java.time.LocalDate;
 
 /**
- * Created by Jan on 12.04.2017.
+ * Created by Jan on 14.04.2017.
  */
-
 @Entity
-public class Patient {
+public class Patient_anonym {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,11 +22,12 @@ public class Patient {
     private String lastName;
     private String email;
     private String insurance;
+    private boolean privateInsurance;
+    private double lastAmountInvoiced;
 
+    public Patient_anonym(){}
 
-    public Patient() {}
-
-    public Patient(int id, String firstName, String lastName, Date birthday, String email, String insurance, int insPolicyNumber, String phoneNumber){
+    public Patient_anonym(int id, String firstName, String lastName, Date birthday, String email, String insurance, int insPolicyNumber, String phoneNumber, boolean privateInsurance, double lastAmountInvoiced){
 
         this.id = id;
         this.firstName = firstName;
@@ -38,6 +37,8 @@ public class Patient {
         this.insurance = insurance;
         this.insuranceNumber = insPolicyNumber;
         this.phoneNumber = phoneNumber;
+        this.privateInsurance = privateInsurance;
+        this.lastAmountInvoiced = lastAmountInvoiced;
     }
 
     public Date getBirthday() {
@@ -48,11 +49,11 @@ public class Patient {
         this.birthday = birthday;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -62,6 +63,14 @@ public class Patient {
 
     public void setInsuranceNumber(int insuranceNumber) {
         this.insuranceNumber = insuranceNumber;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public String getFirstName() {
@@ -96,11 +105,20 @@ public class Patient {
         this.insurance = insurance;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
+    public boolean isPrivateInsurance() {
+        return privateInsurance;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public void setPrivateInsurance(boolean privateInsurance) {
+        this.privateInsurance = privateInsurance;
     }
+
+    public double getLastAmountInvoiced() {
+        return lastAmountInvoiced;
+    }
+
+    public void setLastAmountInvoiced(double lastAmountInvoiced) {
+        this.lastAmountInvoiced = lastAmountInvoiced;
+    }
+
 }

@@ -1,10 +1,11 @@
-package com.masterarbeit;
+package com.masterarbeit.controller;
 
+import com.masterarbeit.entities.Patient;
+import com.masterarbeit.repositories.PatientAnonymRepository;
+import com.masterarbeit.repositories.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

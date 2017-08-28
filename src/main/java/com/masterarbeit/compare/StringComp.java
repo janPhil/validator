@@ -22,92 +22,132 @@ public class StringComp implements ComparerInterface {
 
     }
 
+    private HashMap<Character, Integer> StringToHashMap(String s){
 
-    private List<Integer> getTranspositions(String a, String b) {
+        char[] _s = s.toLowerCase().toCharArray();
+        HashMap<Character, Integer> result = new HashMap<>();
 
-        a = a.toLowerCase();
-        b = b.toLowerCase();
+        for (Character c: _s) {
+            Integer val = result.get(new Character(c));
+            if (val!=null)
+                result.put(c, val+1);
+            else
+                result.put(c,1);
+        }
+        return result;
+    }
 
-        List<Integer> results = new LinkedList<>();
+    private int findCharInStringRight(char x, String a, int pos){
 
+        if (pos>=a.length())
+            pos = a.length()-1;
 
-        for (int i = 0; i < a.length(); i++) {
-            char c = a.charAt(i);
-            boolean leftMatch = false;
-            boolean rightMatch = false;
-            int distance;
-            for (distance = 0; distance < b.length(); distance++) {
-                if (i + distance > b.length()) {
-                    int dis=0;
-                    for (int x=b.length()-1; x>=0;x--){
-                        if (c == b.charAt(x)) {
-                            results.add(dis+1);
-                        }else {
-                            dis++;
-                        }
-                    }
-                    //continue;
-                }
-                if (i < b.length()) {
-                    if (i >= distance) {
-                        if (c == b.charAt(i - distance)) {
-                            leftMatch = true;
-                            break;
-                        }
-                    }
+        int distance=0;
+        for (int i=pos; i<a.length();i++){
+            if (a.charAt(i)==x)
+                return distance;
+            distance++;
+        }
+        return -1;
+    }
 
-                    if (i + distance < b.length()) {
-                        if (c == b.charAt(i + distance)) {
-                            rightMatch = true;
-                            break;
-                        }
-                    }
-                } else
-                    break;
+    private int findCharInStringLeft(char x, String a, int pos){
+
+        if (pos>=a.length())
+            pos = a.length()-1;
+
+        int distance=0;
+        for (int i=pos; i>=0;i--){
+            if (a.charAt(i)==x)
+                return distance;
+            distance++;
+        }
+        return -1;
+    }
+
+    private int[] getTranspositions(String _a, String _b) {
+
+        String a;
+        String b;
+        int length;
+
+        if (_a.length()>_b.length()) {
+            length = _a.length();
+            a = _a;
+            b = _b;
+        } else {
+            length = _b.length();
+            a = _b;
+            b = _a;
+        }
+
+        int[] right= new int[length];
+        int[] left = new int[length];
+
+        for (int i=0; i<length; i++){
+            right[i] = findCharInStringRight(a.charAt(i), b, i);
+            left[i] = findCharInStringLeft(a.charAt(i), b, i);
+        }
+
+        int[] res = new int[length];
+        for (int i=0; i<length;i++){
+
+            if (right[i]>left[i] && right[i]>-1) {
+                res[i] = right[i];
+                System.out.println("re größer li");
             }
-            if (leftMatch || rightMatch) {
-                //System.out.println(distance);
-                results.add(distance);
+            if (left[i]>right[i] && left[i]>-1) {
+                res[i] = right[i];
+                System.out.println("li größer re");
+            }
+            if (left[i]==right[i] && left[i]>-1) {
+                res[i] = right[i];
+                System.out.println("li gl re");
+            }
+            if (left[i]==right[i] && left[i]==-1){
+                res[i] = -1;
             }
         }
 
-        System.out.println("getTranspositions: " + results);
-        return results;
+        int count = 0;
+        for (Integer i: res) {
+            if (i!=-1)
+                count++;
+        }
+        int[] result = new int[count];
+        int temp=0;
+        for (Integer i: res) {
+            if (i!=-1) {
+                result[temp] = i;
+                temp++;
+            }
+        }
+        return result;
 
     }
 
     private HashMap<Character, Integer> getDistribution(String a, String b) {
 
-        char[] s1 = a.toLowerCase().toCharArray();
-        char[] s2 = b.toLowerCase().toCharArray();
-        HashMap<Character, Integer> charsInS1 = new HashMap<>();
+        HashMap<Character, Integer> _a = StringToHashMap(a);
+        HashMap<Character, Integer> _b = StringToHashMap(b);
+        HashMap<Character, Integer> transpositions = new HashMap<>();
+        Set<Character> total = new HashSet<>();
+        total.addAll(_a.keySet());
+        total.addAll(_b.keySet());
 
-        for (int i = 0; i < s1.length; i++) {
-            char c = s1[i];
-            Integer val = charsInS1.get(new Character(c));
-            if (val != null) {
-                charsInS1.put(c, new Integer(val + 1));
-            } else {
-                charsInS1.put(c, 1);
-            }
-        }
-        HashMap<Character, Integer> charsInS2 = new HashMap<>();
+        for (Character c:total) {
+            int x=0;
+            int y=0;
 
-        for (int j = 0; j < s2.length; j++) {
-            char c = s2[j];
-            Integer val = charsInS1.get(new Character(c));
-            if (val == null) {
-                continue;
-            } else {
-                if (charsInS2.get(new Character(c)) != null) {
-                    Integer num = charsInS2.get(new Character(c));
-                    charsInS2.put(c, new Integer(num + 1));
-                } else
-                    charsInS2.put(c, new Integer(1));
-            }
+            if (_a.get(c)!=null)
+                x=_a.get(c);
+            if (_b.get(c)!=null)
+                y=_b.get(c);
+
+            transpositions.put(c, Math.abs(x-y));
         }
-        System.out.println("getDistribution: " + charsInS2.entrySet());
-        return charsInS2;
+         return transpositions;
+
     }
 
     private double hammingDistance(String a, String b) {
@@ -131,18 +171,19 @@ public class StringComp implements ComparerInterface {
     private double compareLength(String a, String b, double sig) {
 
         double length = Math.abs(a.length() - b.length());
-        System.out.println("compareLength: " + (1 - exp(-0.5 * (Math.pow(length / sig, 2)))));
-        return 1 - exp(-0.5 * (Math.pow(length / sig, 2)));
+        System.out.println("CL length: " + length);
+        double result = 1.0 - (exp(-0.5 * (Math.pow(length/sig, 2))));
+        System.out.println("compareLength: " + result);
+        return result;
     }
 
     private double compareContent(String a, String b, double sig) {
 
         double order = compareOrder(a, b, sig);
         double distribution = compareDistribution(a, b, sig);
-        //double hamming = hammingDistance(a,b);
-
-        System.out.println("compareContent: " + 0.5 * (order + distribution));
-        return 0.5 * (order + distribution);
+        double result = 0.5 * (order + distribution);
+        System.out.println("compareContent: " + result);
+        return result;
     }
 
     private double compareDistribution(String a, String b, double sig) {
@@ -156,26 +197,31 @@ public class StringComp implements ComparerInterface {
             Map.Entry<Character, Integer> entry = (Map.Entry) i.next();
             double d = entry.getValue();
             System.out.println(d + " " + entry.getKey());
-            sum += exp(-0.5 * (Math.pow(d / sig, 2)));
+            sum += 1.0 - exp(-0.5 * (Math.pow(d / sig, 2)));
         }
         int size = distributions.size();
         if (size==0)
             return sum;
-        System.out.println("compareDistribution: " + sum * (1 / size));
-        return (sum * (1 / size));
+        System.out.println("compareDistribution: " + sum * (1.0 / size));
+        return (sum * (1.0 / size));
     }
 
     private double compareOrder(String a, String b, double sig) {
 
-        List<Integer> transpositions = getTranspositions(a, b);
-        if (transpositions.size() == 0)
+        int[] transpositions = getTranspositions(a, b);
+        System.out.println(a);
+        System.out.println(b);
+        System.out.println(Arrays.toString(transpositions));
+        if (transpositions.length == 0)
             return 0.0;
         double sum = 0.0;
+
         for (Integer i : transpositions) {
-            sum = sum + 1 - exp(-0.5 * Math.pow(i / sig, 2));
+            sum = sum + (1.0-exp(-0.5 * Math.pow(i / sig, 2.0)));
         }
-        System.out.println("compareOrder: " + (sum * 1 / transpositions.size()));
-        return (sum * 1 / transpositions.size());
+
+        System.out.println("compareOrder: " + (sum * (1.0/transpositions.length)));
+        return (sum * (1.0/transpositions.length));
     }
 
     @Override
@@ -197,10 +243,8 @@ public class StringComp implements ComparerInterface {
             System.out.println("String ist alpha " + _a);
 
 
-
-
-        double result = compareLength(_a, _b, sig) + compareContent(_a, _b, sig);
-        System.out.println("Compare: " + result * 0.5);
-        return (result * 0.5);
+        double result = 0.5 * (compareLength(_a, _b, sig) + compareContent(_a, _b, sig));
+        System.out.println("Compare: " + result);
+        return result;
     }
 }

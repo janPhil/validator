@@ -12,24 +12,26 @@ public class Comparer implements ComparerInterface {
     private final DoubleComp doubleComp;
     private final DateComp dateComp;
     private final StringComp stringComp;
+    private final BoolComp boolComp;
 
-    Comparer(IntegerComp intComp, DoubleComp doubleComp, DateComp dateComp, StringComp stringComp){
+    Comparer(IntegerComp intComp, DoubleComp doubleComp, DateComp dateComp, StringComp stringComp, BoolComp boolComp){
 
         this.intComp = intComp;
         this.doubleComp = doubleComp;
         this.dateComp = dateComp;
         this.stringComp = stringComp;
+        this.boolComp = boolComp;
     }
 
     @Override
     public double compare(Object a, Object b, double sig) {
 
         if (a.getClass() != b.getClass()) {
-            System.out.println("Error: Objects are not same type");
+            System.out.println("Error: Objects are not the same type");
             return 0.0;
         }
         if (a.getClass() == Integer.class || a.getClass() == Long.class){
-            System.out.println("int");
+            System.out.println("int oder long");
             return this.intComp.compare(a,b,sig);
         }
         if (a.getClass() == Double.class){
@@ -37,11 +39,15 @@ public class Comparer implements ComparerInterface {
             return this.doubleComp.compare(a,b,sig);
         }
         if (a.getClass() == LocalDate.class || a.getClass() == Date.class){
-            System.out.println("Date");
+            System.out.println("LocalDate oder Date");
             return this.dateComp.compare(a,b,sig);
         }
         if (a.getClass() == String.class){
             return this.stringComp.compare(a,b,sig);
+        }
+        if (a.getClass() == Boolean.class){
+            System.out.println("Boolean");
+            return this.boolComp.compare(a,b, sig);
         }
 
         return 0.0;

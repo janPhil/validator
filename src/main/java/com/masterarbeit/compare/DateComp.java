@@ -1,7 +1,6 @@
 package com.masterarbeit.compare;
 
 import java.sql.Date;
-import java.sql.SQLData;
 import java.time.LocalDate;
 
 /**
@@ -59,7 +58,7 @@ public class DateComp implements ComparerInterface {
             return res;
         }
         else
-            return 1.0;
+            return 0.0;
     }
 
     @Override

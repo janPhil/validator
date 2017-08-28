@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Validator Service</title>
+    <link rel="stylesheet" href="../static/bootstrap.css"  th:href="@{/bootstrap.css}" />
+</head>
+<body>
+<header>
+    <div class="container-fluid">
+        <h2>Validator Service</h2>
+    </div>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <a class="navbar-light" href="index.html">Gesamte Daten vergleichen</a>
+        </div>
+    </nav>
+
+</header>
+
+
+<form action="#" th:action="@{/showSelectedTables}" th:object="${selection}" method="post">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Tabellen</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="name: ${tablenames}">
+            <td th:text="${name}">TableName</td>
+            <td><input type="checkbox" id="table" name="table" th:value="${name}"/></td>
+        </tr>
+    </tbody>
+    </table>
+    <button th:type="submit">Tabellen Anzeigen</button>
+</form>
+
+
+</body>
+</html>

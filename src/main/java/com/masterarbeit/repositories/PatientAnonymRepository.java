@@ -1,5 +1,6 @@
-package com.masterarbeit;
+package com.masterarbeit.repositories;
 
+import com.masterarbeit.entities.Patient_anonym;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

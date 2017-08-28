@@ -9,7 +9,8 @@
 <header>
     <nav class="navbar navbar-default">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">Vergleich ausgewählter Datensätze</a>
+            <h3 class="align-content-center">Journalansicht für Datensatz</h3>
+            <a class="navbar-brand" href="/">Home</a>
         </div>
     </nav>
 
@@ -20,20 +21,48 @@
     <tr>
         <th>Vorname</th>
         <th>Nachname</th>
+        <th>Geburtstag</th>
         <th>E-Mail</th>
         <th>Versichertennummer</th>
         <th>Versicherung</th>
         <th>Telefonnummer</th>
+        <th>Privatversichert</th>
+        <th>Letzter Rechnungsbetrag</th>
     </tr>
     </thead>
     <tbody>
-    <tr th:each="patient: ${patients}">
+    <tr bgcolor="#cbedc7">
         <td th:text="${patient.firstName}">Vorname</td>
-        <td th:text="${patient.lastName}">Vorname</td>
-        <td th:text="${patient.email}">Vorname</td>
-        <td th:text="${patient.insuranceNumber}">Vorname</td>
-        <td th:text="${patient.insurance}">Vorname</td>
-        <td th:text="${patient.phoneNumber}">Vorname</td>
+        <td th:text="${patient.lastName}">Nachname</td>
+        <td th:text="${patient.birthday}">Geburtstag</td>
+        <td th:text="${patient.email}">Mail</td>
+        <td th:text="${patient.insuranceNumber}">Versicherungsnummer</td>
+        <td th:text="${patient.insurance}">Versicherung</td>
+        <td th:text="${patient.phoneNumber}">Telefonnummer</td>
+        <td th:text="${patient.privateInsurance}">Privatversichert</td>
+        <td th:text="${patient.lastAmountInvoiced}">Letzter Rechnungsbetrag</td>
+    </tr>
+    <tr bgcolor="#ff7f50">
+        <td th:text="${patientAnonym.firstName}">Vorname</td>
+        <td th:text="${patientAnonym.lastName}">Nachname</td>
+        <td th:text="${patientAnonym.birthday}">Geburtstag</td>
+        <td th:text="${patientAnonym.email}">Mail</td>
+        <td th:text="${patientAnonym.insuranceNumber}">Versicherungsnummer</td>
+        <td th:text="${patientAnonym.insurance}">Versicherung</td>
+        <td th:text="${patientAnonym.phoneNumber}">Telefonnummer</td>
+        <td th:text="${patientAnonym.privateInsurance}">Privatversichert</td>
+        <td th:text="${patientAnonym.lastAmountInvoiced}">Letzter Rechnungsbetrag</td>
+    </tr>
+    <tr bgcolor="#2ECCFA">
+        <td th:text="${results.firstName}">Vorname</td>
+        <td th:text="${results.lastName}">Nachname</td>
+        <td th:text="${results.birthday}">Geburtstag</td>
+        <td th:text="${results.email}">Mail</td>
+        <td th:text="${results.insuranceNumber}">Versicherungsnummer</td>
+        <td th:text="${results.insurance}">Versicherung</td>
+        <td th:text="${results.phoneNumber}">Telefonnummer</td>
+        <td th:text="${results.privateInsurance}">Privatversichert</td>
+        <td th:text="${results.lastAmountInvoiced}">Letzter Rechnungsbetrag</td>
     </tr>
     </tbody>
 </table>
