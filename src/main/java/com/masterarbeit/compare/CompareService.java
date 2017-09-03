@@ -19,13 +19,12 @@ public class CompareService {
     private BoolComp boolComp = new BoolComp();
     private Comparer comp = new Comparer(intCompare,doubleCompare,dateCompare,stringCompare, boolComp);
 
-
-    public Map<Integer, Double> doCompare(List<Patient> patients, List<Patient_anonym> patient_anonym) throws IllegalAccessException {
+    public Map<Integer, Double> compareOneOnOne(List<Patient> patients, List<Patient_anonym> patient_anonym) throws IllegalAccessException {
 
         Iterator<Patient> it1 = patients.iterator();
         Iterator<Patient_anonym> it2 = patient_anonym.iterator();
-        List<Map<String, Double>> results = new ArrayList<>();
-        Map<Integer, Double> overallOutcome = new HashMap<>();
+        //List<Map<String, Double>> results = new ArrayList<>();
+        Map<Integer, Double> resultsPerRecord = new HashMap<>();
 
         while(it1.hasNext() && it2.hasNext()){
 
@@ -44,13 +43,13 @@ public class CompareService {
             }
 
             Patient p = (Patient) patientOriginal;
-            overallOutcome.put(p.getId(), getAbsolute(result));
+            resultsPerRecord.put(p.getId(), getAbsolute(result));
 
-            results.add(result);
+            //results.add(result);
         }
         System.out.println("----------Results:---------------");
 
-        for (Object result : results) {
+        /*for (Object result : results) {
             HashMap<String, Double> temp = (HashMap<String, Double>) result;
             Set set = temp.entrySet();
             for (Object aSet : set) {
@@ -58,9 +57,9 @@ public class CompareService {
                 System.out.println(me.getKey() + " : " + me.getValue());
             }
             System.out.println("-----------------------------");
-        }
-
-        return overallOutcome;
+        }*/
+        resultForTable(resultsPerRecord);
+        return resultsPerRecord;
     }
 
     public Map<Integer, Double> doCompareSAP(List<sap> original, List<qup_sap> anonym) throws IllegalAccessException {
@@ -118,6 +117,21 @@ public class CompareService {
             System.out.println("Key: " + me.getKey() + " Value: " + me.getValue());
         }
         return sum/(set.size()-1);
+    }
+
+    public double resultForTable(Map<Integer, Double> map){
+
+        double result=0;
+        int count=0;
+        Iterator iterator = map.entrySet().iterator();
+        while (iterator.hasNext()){
+            Map.Entry entry = (Map.Entry) iterator.next();
+            result = result + (Double) entry.getValue();
+        }
+
+        System.out.println("Table: " + result/map.size());
+        return (result/map.size());
+
     }
 
     public HashMap<String, Double> compareOne(Patient p, Patient_anonym pa) throws IllegalAccessException{

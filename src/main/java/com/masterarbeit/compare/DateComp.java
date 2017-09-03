@@ -24,28 +24,6 @@ public class DateComp implements ComparerInterface {
         return date;
     }
 
-    private double compareTwoValues(int org, int anonymus, int half, int full){
-
-        if (org<anonymus){
-            if (anonymus-org<(full-anonymus+org)){
-                //System.out.println("1: " + (1.0-((anonymus-org)/15.0)));
-                return (1.0-((anonymus-org)/(half+0.0)));
-            } else {
-                //System.out.println("2");
-                return (1.0-((full-anonymus+org)/(half+0.0)));
-            }
-        } else {
-            if (org-anonymus<(full-org+anonymus)){
-                //System.out.println("3");
-                return (1.0-((org-anonymus)/(half+0.0)));
-            } else {
-                //System.out.println("4");
-                return (1.0-((full-org+anonymus)/(half+0.0)));
-            }
-        }
-
-    }
-
     private double gausCompareTwoValues(int org, int anonymus, double sig){
 
         if (org<anonymus){

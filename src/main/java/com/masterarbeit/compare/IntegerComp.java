@@ -3,7 +3,6 @@ package com.masterarbeit.compare;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import static java.lang.Math.E;
 import static java.lang.Math.exp;
 import static java.lang.Math.pow;
 
@@ -42,7 +41,7 @@ public class IntegerComp implements ComparerInterface {
         return array;
     }
 
-    private  void arrangeLength(ArrayList<Integer> a, ArrayList<Integer> b){
+    private void arrangeLength(ArrayList<Integer> a, ArrayList<Integer> b){
 
         if (a.size() != b.size()){
             if (a.size() < b.size()){
@@ -80,19 +79,19 @@ public class IntegerComp implements ComparerInterface {
 
         ArrayList<Integer> org = new ArrayList<>();
         ArrayList<Integer> anonymus = new ArrayList<>();
-        if (a.getClass() == String.class && b.getClass() == String.class){
+        if (a instanceof String && b instanceof String){
             org = (stringToArrayList(((String) a)));
             anonymus = (stringToArrayList(((String) b)));
             if (a.equals(b))
                 return 0.0;
         }
-        else if (a.getClass() == Integer.class && b.getClass() == Integer.class) {
+        else if (a instanceof Integer && b instanceof Integer) {
             if (a.equals(b))
                 return 0.0;
             org = (intToArrayList(((Integer) a)));
             anonymus = (intToArrayList(((Integer) b)));
         }
-        else if (a.getClass() == Long.class && b.getClass() == Long.class) {
+        else if (a instanceof Long && b instanceof Long) {
             if (a.equals(b))
                 return 0.0;
             org = (longToArrayList(((long) a)));

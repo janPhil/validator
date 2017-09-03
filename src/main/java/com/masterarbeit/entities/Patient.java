@@ -29,7 +29,7 @@ public class Patient {
 
     public Patient() {}
 
-    public Patient(int id, String firstName, String lastName, Date birthday, String email, String insurance, int insPolicyNumber, String phoneNumber, boolean privateInsurance, double lastAmountInvoiced){
+    public Patient(int id, String firstName, String lastName, Date birthday, String email, String insurance, long insuranceNumber, String phoneNumber, boolean privateInsurance, double lastAmountInvoiced){
 
         this.id = id;
         this.firstName = firstName;
@@ -37,7 +37,7 @@ public class Patient {
         this.birthday = birthday;
         this.email = email;
         this.insurance = insurance;
-        this.insuranceNumber = insPolicyNumber;
+        this.insuranceNumber = insuranceNumber;
         this.phoneNumber = phoneNumber;
         this.privateInsurance = privateInsurance;
         this.lastAmountInvoiced = lastAmountInvoiced;
@@ -63,7 +63,7 @@ public class Patient {
         return insuranceNumber;
     }
 
-    public void setInsuranceNumber(int insuranceNumber) {
+    public void setInsuranceNumber(long insuranceNumber) {
         this.insuranceNumber = insuranceNumber;
     }
 

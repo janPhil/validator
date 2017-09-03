@@ -43,22 +43,22 @@ public class ViewController {
         return "index";
     }
 
-
     @RequestMapping("/compare")
     public String compare(Model theModel) throws IllegalAccessException {
 
         CompareService compareService = new CompareService();
-        Map<Integer,Double> results = compareService.doCompare(patientRepository.findAll(), patientAnonymRepository.findAll());
-
+        Map<Integer,Double> results = compareService.compareOneOnOne(patientRepository.findAll(), patientAnonymRepository.findAll());
+        double table = compareService.resultForTable(results);
         theModel.addAttribute("patients", patientRepository.findAll());
         theModel.addAttribute("patientsAnonym", patientAnonymRepository.findAll());
         theModel.addAttribute("result", results);
+        theModel.addAttribute("table", table);
 
         return "compare";
     }
 
     @RequestMapping("/compareSelected")
-    public String compareSelected(Model model, @RequestParam(name="pid") List<String> selection){
+    public String compareSelected(Model theModel, @RequestParam(name="pid") List<String> selection){
 
         List<Patient> list = new ArrayList<>();
 
@@ -66,7 +66,7 @@ public class ViewController {
             System.out.println(s);
             list.add(patientRepository.findOne(Integer.parseInt(s)));
         }
-        model.addAttribute("patients",list);
+        theModel.addAttribute("patients",list);
 
         return "compareSelected";
     }
@@ -123,7 +123,6 @@ public class ViewController {
 
         return "showSelectedTables";
     }
-
 
     @RequestMapping("testMail")
     public String testMail(){
