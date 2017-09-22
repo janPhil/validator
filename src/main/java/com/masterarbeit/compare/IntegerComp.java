@@ -41,6 +41,7 @@ public class IntegerComp implements ComparerInterface {
         return array;
     }
 
+
     private void arrangeLength(ArrayList<Integer> a, ArrayList<Integer> b){
 
         if (a.size() != b.size()){
@@ -62,14 +63,14 @@ public class IntegerComp implements ComparerInterface {
     private double compareLength(ArrayList<Integer> a, ArrayList<Integer> b, double sig){
 
         double result;
-        if (a.size()>b.size()) {
+        if (a.size() > b.size()) {
             result = exp(-0.5*(((pow(((a.size() - b.size())/sig),2)))));
         }
-        else if (a.size()<b.size()){
+        else if (a.size() < b.size()){
             result = exp(-0.5*(((pow(((b.size()-a.size())/sig),2)))));
         }
         else {
-            return 1.0;
+            return 0.0;
         }
         return result;
     }
@@ -79,6 +80,7 @@ public class IntegerComp implements ComparerInterface {
 
         ArrayList<Integer> org = new ArrayList<>();
         ArrayList<Integer> anonymus = new ArrayList<>();
+
         if (a instanceof String && b instanceof String){
             org = (stringToArrayList(((String) a)));
             anonymus = (stringToArrayList(((String) b)));
@@ -98,8 +100,8 @@ public class IntegerComp implements ComparerInterface {
             anonymus = (longToArrayList(((long) b)));
         }
 
+
         double length = compareLength(org,anonymus,sig);
-        // TODO ArrangeLength ist nur Hilfsfunktion!
         arrangeLength(org, anonymus);
         int len = org.size();
         double sum = 0.0;
@@ -107,6 +109,11 @@ public class IntegerComp implements ComparerInterface {
         for (int i = 0; i < len; i++) {
             sum += exp(-0.5*(pow(org.get(i)-anonymus.get(i)/sig,2)));
         }
+
+        Collections.reverse(anonymus);
+        if (org.equals(anonymus))
+            sum =  0.0;
+
         double cont = (1.0/len) * sum;
         return (0.5*(cont+length));
     }

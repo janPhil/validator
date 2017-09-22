@@ -36,22 +36,22 @@
         <td th:text="${patient.lastName}">Nachname</td>
         <td th:text="${patient.birthday}">Geburtstag</td>
         <td th:text="${patient.email}">Mail</td>
-        <td th:text="${patient.patientNumber}">Patientennummer</td>
+        <td th:text="${patient.patientNumber}">Versicherungsnummer</td>
         <td th:text="${patient.insurance}">Versicherung</td>
         <td th:text="${patient.phoneNumber}">Telefonnummer</td>
         <td th:text="${patient.privateInsurance}">Privatversichert</td>
         <td th:text="${patient.lastAmountInvoiced}">Letzter Rechnungsbetrag</td>
     </tr>
     <tr bgcolor="#ff7f50">
-        <td th:text="${patientAnonym.firstName}">Vorname</td>
-        <td th:text="${patientAnonym.lastName}">Nachname</td>
-        <td th:text="${patientAnonym.birthday}">Geburtstag</td>
-        <td th:text="${patientAnonym.email}">Mail</td>
-        <td th:text="${patientAnonym.patientNumber}">Patientennummer</td>
-        <td th:text="${patientAnonym.insurance}">Versicherung</td>
-        <td th:text="${patientAnonym.phoneNumber}">Telefonnummer</td>
-        <td th:text="${patientAnonym.privateInsurance}">Privatversichert</td>
-        <td th:text="${patientAnonym.lastAmountInvoiced}">Letzter Rechnungsbetrag</td>
+        <td th:text="${mostLikely.firstName}">Vorname</td>
+        <td th:text="${mostLikely.lastName}">Nachname</td>
+        <td th:text="${mostLikely.birthday}">Geburtstag</td>
+        <td th:text="${mostLikely.email}">Mail</td>
+        <td th:text="${mostLikely.patientNumber}">Patientennummer</td>
+        <td th:text="${mostLikely.insurance}">Versicherung</td>
+        <td th:text="${mostLikely.phoneNumber}">Telefonnummer</td>
+        <td th:text="${mostLikely.privateInsurance}">Privatversichert</td>
+        <td th:text="${mostLikely.lastAmountInvoiced}">Letzter Rechnungsbetrag</td>
     </tr>
     <tr bgcolor="#2ECCFA">
         <td th:text="${results.firstName}">Vorname</td>
@@ -66,6 +66,6 @@
     </tr>
     </tbody>
 </table>
-<a th:href="@{/findTheMostLikely(pid=${patient.id})}">Für diesen Datensatz den meist ähnlichen Finden</a>
+<p th:text="${total}"></p>
 </body>
 </html>

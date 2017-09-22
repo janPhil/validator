@@ -1,5 +1,6 @@
 package com.masterarbeit.compare;
 
+import java.text.ParseException;
 import java.util.*;
 
 import static java.lang.Math.exp;
@@ -11,13 +12,16 @@ public class StringComp implements ComparerInterface {
 
 
     private final IntegerComp integerComp;
+    private final InsuranceNumberComp insuranceNumberComp;
 
-    public StringComp(IntegerComp integerComp) {
+    public StringComp(IntegerComp integerComp, InsuranceNumberComp insuranceNumberComp) {
+
         this.integerComp = integerComp;
+        this.insuranceNumberComp = insuranceNumberComp;
     }
 
     private Long StringToLong(String x) {
-
+        x = x.replaceAll("\\s+", "");
         return Long.parseLong(x);
 
     }
@@ -225,25 +229,50 @@ public class StringComp implements ComparerInterface {
     }
 
     @Override
-    public double compare(Object a, Object b, double sig) {
+    public double compare(Object a, Object b, double sig) throws ParseException {
 
 
         String _a = (String) a;
         String _b = (String) b;
 
+        if (_a.matches("\\d+") && _b.matches("\\D+")) {
+            System.out.println("Error: different typ of inputs");
+            return 0.0;
+        }
+        if (_b.matches("\\d+") && _a.matches("\\D+")) {
+            System.out.println("Error: different typ of inputs");
+            return 0.0;
+        }
+
+        if (_a.matches("^\\d+[a-zA-Z][a-zA-Z\\d]*$") && _b.matches("^\\d+[a-zA-Z][a-zA-Z\\d]*$")){
+            System.out.println("String ist alphaNum");
+            if ((_a.length()==12 && _b.length()==12)) {
+                String x = _a.substring(8,9);
+                String y = _b.substring(8,9);
+                if (x.matches("[a-zA-Z]") && y.matches("[a-zA-Z]"))
+                    return this.insuranceNumberComp.compare(a, b, sig);
+            }
+        }
 
         if (_a.matches("[A-z]+[0-9]$") && _b.matches("[A-z]+[0-9]$")){
             System.out.println("String ist alphanumerisch " + _a);
-        } else if (_a.matches("[0-9]+") && _b.matches("[0-9]+")){
+            return 0.0;
+        } else if (_a.matches("[0-9 ]+") && _b.matches("[0-9 ]+")){
             System.out.println("String ist numerisch " + _a);
-            return this.integerComp.compare( StringToLong(((String) a)), StringToLong(((String) b)),1.0);
+            return this.integerComp.compare( StringToLong(_a), StringToLong(_b),sig);
         }
-        // @To-Do check if BOTH Obj. are same type!!!
         else
             System.out.println("String ist alpha " + _a);
 
 
-        double result = 0.5 * (compareLength(_a, _b, sig) + compareContent(_a, _b, sig));
+        double content = compareContent(_a, _b, sig);
+        double length = compareLength(_a, _b, sig);
+
+        if (_a.toLowerCase().contains(_b.toLowerCase())||_b.toLowerCase().contains(_a.toLowerCase())){
+            content = 0.0;
+        }
+
+        double result = 0.5 * (length + content);
         System.out.println("Compare: " + result);
         return result;
     }

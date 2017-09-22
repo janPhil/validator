@@ -29,11 +29,11 @@
     <tbody>
     <tr th:each="patient: ${patients}">
         <td th:text="${patient.firstName}">Vorname</td>
-        <td th:text="${patient.lastName}">Vorname</td>
-        <td th:text="${patient.email}">Vorname</td>
-        <td th:text="${patient.insuranceNumber}">Vorname</td>
-        <td th:text="${patient.insurance}">Vorname</td>
-        <td th:text="${patient.phoneNumber}">Vorname</td>
+        <td th:text="${patient.lastName}">Nachname</td>
+        <td th:text="${patient.email}">Mail</td>
+        <td th:text="${patient.patientNumber}">Patientennummer</td>
+        <td th:text="${patient.insurance}">Versicherung</td>
+        <td th:text="${patient.phoneNumber}">Telefon</td>
     </tr>
     </tbody>
 </table>

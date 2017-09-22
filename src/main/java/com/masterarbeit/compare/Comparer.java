@@ -1,6 +1,7 @@
 package com.masterarbeit.compare;
 
 import java.sql.Date;
+import java.text.ParseException;
 import java.time.LocalDate;
 
 /**
@@ -14,7 +15,7 @@ public class Comparer implements ComparerInterface {
     private final StringComp stringComp;
     private final BoolComp boolComp;
 
-    Comparer(IntegerComp intComp, DoubleComp doubleComp, DateComp dateComp, StringComp stringComp, BoolComp boolComp){
+    Comparer(IntegerComp intComp, DoubleComp doubleComp, DateComp dateComp, StringComp stringComp, BoolComp boolComp, InsuranceNumberComp insuranceNumberComp){
 
         this.intComp = intComp;
         this.doubleComp = doubleComp;
@@ -24,7 +25,7 @@ public class Comparer implements ComparerInterface {
     }
 
     @Override
-    public double compare(Object a, Object b, double sig) {
+    public double compare(Object a, Object b, double sig) throws ParseException {
 
         if (a.getClass() != b.getClass()) {
             System.out.println("Error: Objects are not the same type");
@@ -32,6 +33,7 @@ public class Comparer implements ComparerInterface {
         }
         if (a.getClass() == Integer.class || a.getClass() == Long.class){
             System.out.println("int oder long");
+            System.out.println(a);
             return this.intComp.compare(a,b,sig);
         }
         if (a.getClass() == Double.class){

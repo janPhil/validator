@@ -16,7 +16,7 @@ public class Patient {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private long insuranceNumber;
+    private Long patientNumber;
     private String phoneNumber;
     private Date birthday;
     private String firstName;
@@ -29,7 +29,7 @@ public class Patient {
 
     public Patient() {}
 
-    public Patient(int id, String firstName, String lastName, Date birthday, String email, String insurance, long insuranceNumber, String phoneNumber, boolean privateInsurance, double lastAmountInvoiced){
+    public Patient(int id, String firstName, String lastName, Date birthday, String email, String insurance, Long patientNumber, String phoneNumber, boolean privateInsurance, double lastAmountInvoiced){
 
         this.id = id;
         this.firstName = firstName;
@@ -37,7 +37,7 @@ public class Patient {
         this.birthday = birthday;
         this.email = email;
         this.insurance = insurance;
-        this.insuranceNumber = insuranceNumber;
+        this.patientNumber = patientNumber;
         this.phoneNumber = phoneNumber;
         this.privateInsurance = privateInsurance;
         this.lastAmountInvoiced = lastAmountInvoiced;
@@ -59,12 +59,12 @@ public class Patient {
         this.id = id;
     }
 
-    public long getInsuranceNumber() {
-        return insuranceNumber;
+    public Long getPatientNumber() {
+        return patientNumber;
     }
 
-    public void setInsuranceNumber(long insuranceNumber) {
-        this.insuranceNumber = insuranceNumber;
+    public void setPatientNumber(Long patientNumber) {
+        this.patientNumber = patientNumber;
     }
 
     public String getFirstName() {
